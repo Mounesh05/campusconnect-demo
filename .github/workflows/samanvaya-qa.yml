@@ -55,10 +55,10 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
         run: |
           if [ -n "$TEST_RESULTS_FILE" ] && [ -f "$TEST_RESULTS_FILE" ]; then
-            echo "✅ Uploading test results: $TEST_RESULTS_FILE"
+            echo "Uploading test results: $TEST_RESULTS_FILE"
             SAMANVAYA_TEST_SUITE="${SAMANVAYA_TEST_SUITE}" python ci/upload_junit_results.py --junit "$TEST_RESULTS_FILE"
           else
-            echo "⚠️  No test results file found - creating failure report for Samanvaya"
+            echo "No test results file found - creating failure report for Samanvaya"
             cat > workflow-failure.xml << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
@@ -84,7 +84,7 @@ Commit: ${GITHUB_SHA}
   </testsuite>
 </testsuites>
 EOF
-            SAMANVAYA_TEST_SUITE="workflow" python ci/upload_junit_results.py --junit workflow-failure.xml || echo "❌ Failed to upload failure report"
+            SAMANVAYA_TEST_SUITE="workflow" python ci/upload_junit_results.py --junit workflow-failure.xml || echo "Failed to upload failure report"
           fi
       
       # Fail workflow if tests failed
